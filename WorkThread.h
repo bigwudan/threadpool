@@ -10,6 +10,7 @@
 namespace threadpool
 {
 
+class ThreadPool;
 class WorkThread
 {
 public:
@@ -21,9 +22,17 @@ public:
 	};
 	pthread_t thread_id;
 	work_state thread_state;	
-	void *(*start_rtn)(void*);
+	void *(*work_thread_cb)(void*);
 	ThreadPool *thread_pool;
-	void * work_thread_cb(void* );
+	int id;
+	
+	
+	void *thr_fn(void *arg)
+	{
+		return NULL;
+	}
+
+
 };
 
 

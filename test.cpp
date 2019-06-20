@@ -8,12 +8,13 @@
 int main()
 {
 
-	threadpool::ThreadPool thread_pool;
+	threadpool::ThreadPool thread_pool(2, 10);
 
-	threadpool::WorkThread work_thread;
+//	threadpool::WorkThread work_thread;
 
-	work_thread.thread_pool = &thread_pool;
+//	work_thread.thread_pool = &thread_pool;
 
 
+	
 
 }
