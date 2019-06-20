@@ -12,7 +12,7 @@
 
 namespace threadpool
 {
-class WorkThread;
+//class WorkThread;
 class ThreadTask;
 class ThreadPool
 {
