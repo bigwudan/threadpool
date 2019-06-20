@@ -13,7 +13,7 @@ namespace threadpool
 class WorkThread
 {
 public:
-	WorkThread():thread_id(0),thread_state(WorkState){
+	WorkThread():thread_id(0),thread_state(WorkState),thread_pool(NULL){
 	};
 	enum work_state{
 		WorkState,
@@ -24,10 +24,6 @@ public:
 	void *(*start_rtn)(void*);
 	ThreadPool *thread_pool;
 	void * work_thread_cb(void* );
-
-
-
-
 };
 
 

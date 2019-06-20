@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Computer	test.h	/^class Computer$/;"	c	namespace:mytest
+ComputerState	test.h	/^	enum ComputerState$/;"	g	class:mytest::Computer
+StopState	WorkThread.h	/^		StopState$/;"	e	enum:threadpool::WorkThread::work_state
+ThreadPool	ThreadPool.h	/^class ThreadPool$/;"	c	namespace:threadpool
+WorkState	WorkThread.h	/^		WorkState,$/;"	e	enum:threadpool::WorkThread::work_state
+WorkThread	WorkThread.h	/^	WorkThread():thread_id(0),thread_state(WorkState){$/;"	f	class:threadpool::WorkThread
+WorkThread	WorkThread.h	/^class WorkThread$/;"	c	namespace:threadpool
+_THREADPOOL_H	ThreadPool.h	2;"	d
+_WORKTHREAD_H_	WorkThread.h	3;"	d
+_test_h	test.h	2;"	d
+main	test.cpp	/^int main()$/;"	f
+mytest	test.h	/^namespace mytest$/;"	n
+start_rtn	WorkThread.h	/^	void *(*start_rtn)(void*);$/;"	m	class:threadpool::WorkThread
+state_closed	test.h	/^		state_closed = -2,$/;"	e	enum:mytest::Computer::ComputerState
+state_open	test.h	/^		state_open = 1,$/;"	e	enum:mytest::Computer::ComputerState
+state_suspended	test.h	/^		state_suspended = 3$/;"	e	enum:mytest::Computer::ComputerState
+test	test.h	/^	void test(ComputerState state )$/;"	f	class:mytest::Computer
+thread_id	WorkThread.h	/^	pthread_t thread_id;$/;"	m	class:threadpool::WorkThread
+thread_pool	WorkThread.h	/^	ThreadPool *thread_pool;$/;"	m	class:threadpool::WorkThread
+thread_state	WorkThread.h	/^	work_state thread_state;	$/;"	m	class:threadpool::WorkThread
+threadpool	ThreadPool.h	/^namespace threadpool$/;"	n
+threadpool	WorkThread.h	/^namespace threadpool$/;"	n
+work_state	WorkThread.h	/^	enum work_state{$/;"	g	class:threadpool::WorkThread
+work_thread	ThreadPool.h	/^	std::list<WorkThread*> work_thread;$/;"	m	class:threadpool::ThreadPool

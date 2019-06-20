@@ -2,16 +2,17 @@
 
 
 #include "WorkThread.h"
+#include "ThreadPool.h"
 
 
 int main()
 {
 
+	threadpool::ThreadPool thread_pool;
 
-	std::cout << "nighao" << std::endl;
+	threadpool::WorkThread work_thread;
 
-
-
+	work_thread.thread_pool = &thread_pool;
 
 
 
