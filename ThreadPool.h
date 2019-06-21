@@ -1,9 +1,6 @@
 #ifndef _THREADPOOL_H
 #define _THREADPOOL_H
-
-
 #include <list>
-
 #include <iostream>
 
 #include "ThreadTask.h"
@@ -12,7 +9,7 @@
 
 namespace threadpool
 {
-//class WorkThread;
+class WorkThread;
 class ThreadTask;
 class ThreadPool
 {
@@ -40,12 +37,9 @@ public:
 	int wait_exit_thr_num;
 	threadpool_state shutdown;
 	int ThreadInit();
-	static void *thr_fn(void *arg)
-	{
-		WorkThread *work_thr = (WorkThread *)arg ;
-		std::cout << (work_thr->thread_state) << std::endl;
-		return NULL;
-	}
+	static void *thr_fn(void *arg);
+
+	int add_task(ThreadTask &task);
 
 };
 }

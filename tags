@@ -12,7 +12,6 @@ StopState	WorkThread.h	/^		StopState$/;"	e	enum:threadpool::WorkThread::work_sta
 ThreadInit	ThreadPool.cpp	/^int ThreadPool::ThreadInit()$/;"	f	class:ThreadPool
 ThreadPool	ThreadPool.cpp	/^ThreadPool::ThreadPool(int min_num, int max_num):$/;"	f	class:ThreadPool
 ThreadPool	ThreadPool.h	/^class ThreadPool$/;"	c	namespace:threadpool
-ThreadTask	ThreadTask.h	/^	ThreadTask(int id):thread_task_id(id)$/;"	f	class:ThreadTask::ThreadTask
 ThreadTask	ThreadTask.h	/^class ThreadTask$/;"	c	namespace:ThreadTask
 ThreadTask	ThreadTask.h	/^namespace ThreadTask$/;"	n
 WorkState	WorkThread.h	/^		WorkState,$/;"	e	enum:threadpool::WorkThread::work_state
@@ -22,7 +21,9 @@ _THREADPOOL_H	ThreadPool.h	2;"	d
 _THREADTASK_H	ThreadTask.h	2;"	d
 _WORKTHREAD_H_	WorkThread.h	3;"	d
 _test_h	test.h	2;"	d
+add_task	ThreadPool.cpp	/^int ThreadPool::add_task(ThreadTask &task)$/;"	f	class:ThreadPool
 busy_thr_num	ThreadPool.h	/^	int busy_thr_num;$/;"	m	class:threadpool::ThreadPool
+flag	ThreadTask.h	/^	int flag;$/;"	m	class:ThreadTask::ThreadTask
 id	WorkThread.h	/^	int id;$/;"	m	class:threadpool::WorkThread
 live_thr_num	ThreadPool.h	/^	int live_thr_num;$/;"	m	class:threadpool::ThreadPool
 lock	ThreadPool.h	/^	pthread_mutex_t lock; \/\/本结构$/;"	m	class:threadpool::ThreadPool
@@ -37,17 +38,17 @@ state_closed	test.h	/^		state_closed = -2,$/;"	e	enum:mytest::Computer::Computer
 state_open	test.h	/^		state_open = 1,$/;"	e	enum:mytest::Computer::ComputerState
 state_suspended	test.h	/^		state_suspended = 3$/;"	e	enum:mytest::Computer::ComputerState
 test	test.h	/^	void test(ComputerState state )$/;"	f	class:mytest::Computer
-thr_fn	ThreadPool.h	/^	static void *thr_fn(void *arg)$/;"	f	class:threadpool::ThreadPool
+thr_fn	ThreadPool.cpp	/^void *ThreadPool::thr_fn(void *arg)$/;"	f	class:ThreadPool
 thr_fn	WorkThread.h	/^	void *thr_fn(void *arg)$/;"	f	class:threadpool::WorkThread
 thread_counter	ThreadPool.h	/^	pthread_mutex_t thread_counter; \/\/记录忙状态个数$/;"	m	class:threadpool::ThreadPool
 thread_id	WorkThread.h	/^	pthread_t thread_id;$/;"	m	class:threadpool::WorkThread
 thread_pool	WorkThread.h	/^	ThreadPool *thread_pool;$/;"	m	class:threadpool::WorkThread
 thread_state	WorkThread.h	/^	work_state thread_state;	$/;"	m	class:threadpool::WorkThread
-thread_task	ThreadPool.h	/^	std::list<ThreadTask*> thread_task;$/;"	m	class:threadpool::ThreadPool
 thread_task_id	ThreadTask.h	/^	int thread_task_id;$/;"	m	class:ThreadTask::ThreadTask
 threadpool	ThreadPool.h	/^namespace threadpool$/;"	n
 threadpool	WorkThread.h	/^namespace threadpool$/;"	n
 threadpool_state	ThreadPool.h	/^enum threadpool_state{ On, Off };$/;"	g	class:threadpool::ThreadPool
+tm	ThreadPool.h	/^	ThreadTask tm;$/;"	m	class:threadpool::ThreadPool
 wait_exit_thr_num	ThreadPool.h	/^	int wait_exit_thr_num;$/;"	m	class:threadpool::ThreadPool
 work_state	WorkThread.h	/^	enum work_state{$/;"	g	class:threadpool::WorkThread
 work_thread	ThreadPool.h	/^	std::list<WorkThread*> work_thread;$/;"	m	class:threadpool::ThreadPool

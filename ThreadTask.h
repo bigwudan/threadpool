@@ -1,7 +1,7 @@
 #ifndef _THREADTASK_H
 #define _THREADTASK_H
 
-namespace ThreadTask
+namespace threadpool
 {
 
 class ThreadTask
@@ -11,6 +11,9 @@ public:
 	ThreadTask(int id):thread_task_id(id)
 	{
 	};
+	int flag;
+
+
 };
 }
 
