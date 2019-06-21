@@ -78,7 +78,6 @@ void *ThreadPool::thr_fn(void *arg)
 
 int ThreadPool::add_task(ThreadTask &task)
 {
-	task.flag = 10;
 	pthread_mutex_lock(&lock);
 	thread_task.push_back(&task);
 	pthread_cond_signal(&queue_not_empty);

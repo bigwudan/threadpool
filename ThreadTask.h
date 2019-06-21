@@ -11,7 +11,6 @@ public:
 	ThreadTask(int id):thread_task_id(id)
 	{
 	};
-	int flag;
 
 
 };
