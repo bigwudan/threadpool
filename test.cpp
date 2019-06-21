@@ -15,15 +15,20 @@ int main()
 	thread_pool.ThreadInit();
 
 	threadpool::ThreadTask t1(1);
+
+	t1.thread_task_id = 10;
+
 	threadpool::ThreadTask t2(2);
+	
+	sleep(3);
 
 	thread_pool.add_task(t1);
 	
-	thread_pool.add_task(t2);
+//	thread_pool.add_task(t2);
 
 
 
-	sleep(5);
+	sleep(10);
 
 
 	
