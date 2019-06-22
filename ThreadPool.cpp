@@ -72,20 +72,33 @@ void *ThreadPool::thr_fn(void *arg)
 {
 	WorkThread *work_thr = (WorkThread *)arg ;
 	ThreadPool *pool = work_thr->thread_pool;
-	
-	while(work_thr->thread_state == WorkThread::WorkState )
-	{
-		pthread_mutex_lock(&pool->lock);	
-		if(pool->thread_task.size() == 0 ){
-			pthread_cond_wait(&pool->queue_not_empty, &pool->lock);
-			if(pool->wait_exit_thr_num >0 ){
-				pthread_exit(NULL);
+	while(1){
+		pthread_mutex_lock(&pool->lock);
+		while((pool->task_num == 0)  ){
+			pthread_cond_wait( &pool->queue_not_empty, &pool->lock   );
+			if(pool->wait_exit_thr_num > 0){
+				pool->wait_exit_thr_num--;
+				if(pool->live_thr_num > pool->min_thr_num){
+					pool->live_thr_num--;
+					pthread_mutex_unlock(&pool->lock);
+					pthread_exit(NULL);
+				}
 			}
 		}
 		std::cout << (*((pool->thread_task).begin()))->thread_task_id<< std::endl;
 		(pool->thread_task).erase((pool->thread_task).begin());
-		pthread_mutex_unlock(&pool->lock);	
+		pool->task_num--;
 		pthread_cond_broadcast(&pool->queue_not_full);
+		pthread_mutex_unlock(&pool->lock);
+		pthread_mutex_lock(&pool->thread_counter);
+		pool->busy_thr_num++;
+		pthread_mutex_unlock(&pool->thread_counter);
+		//fun
+
+
+		pthread_mutex_lock(&pool->thread_counter);
+		pool->busy_thr_num--;
+		pthread_mutex_unlock(&pool->thread_counter);
 	}
 	return NULL;
 }
