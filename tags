@@ -22,6 +22,7 @@ _THREADTASK_H	ThreadTask.h	2;"	d
 _WORKTHREAD_H_	WorkThread.h	3;"	d
 _test_h	test.h	2;"	d
 add_task	ThreadPool.cpp	/^int ThreadPool::add_task(ThreadTask &task)$/;"	f	class:ThreadPool
+adjust_time	ThreadPool.h	/^	static int adjust_time;$/;"	m	class:threadpool::ThreadPool
 busy_thr_num	ThreadPool.h	/^	int busy_thr_num;$/;"	m	class:threadpool::ThreadPool
 id	WorkThread.h	/^	int id;$/;"	m	class:threadpool::WorkThread
 live_thr_num	ThreadPool.h	/^	int live_thr_num;$/;"	m	class:threadpool::ThreadPool
@@ -37,6 +38,7 @@ state_closed	test.h	/^		state_closed = -2,$/;"	e	enum:mytest::Computer::Computer
 state_open	test.h	/^		state_open = 1,$/;"	e	enum:mytest::Computer::ComputerState
 state_suspended	test.h	/^		state_suspended = 3$/;"	e	enum:mytest::Computer::ComputerState
 test	test.h	/^	void test(ComputerState state )$/;"	f	class:mytest::Computer
+thr_adjust_fn	ThreadPool.cpp	/^void *ThreadPool::thr_adjust_fn(void *arg)$/;"	f	class:ThreadPool
 thr_fn	ThreadPool.cpp	/^void *ThreadPool::thr_fn(void *arg)$/;"	f	class:ThreadPool
 thr_fn	WorkThread.h	/^	void *thr_fn(void *arg)$/;"	f	class:threadpool::WorkThread
 thread_counter	ThreadPool.h	/^	pthread_mutex_t thread_counter; \/\/记录忙状态个数$/;"	m	class:threadpool::ThreadPool

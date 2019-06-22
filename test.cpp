@@ -16,7 +16,6 @@ int main()
 
 	threadpool::ThreadTask t1(1);
 
-	t1.thread_task_id = 10;
 
 	threadpool::ThreadTask t2(2);
 	

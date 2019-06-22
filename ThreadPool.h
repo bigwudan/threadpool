@@ -35,9 +35,13 @@ public:
 	int live_thr_num;
 	int busy_thr_num;
 	int wait_exit_thr_num;
+		
+	static int adjust_time;
+
 	threadpool_state shutdown;
 	int ThreadInit();
 	static void *thr_fn(void *arg);
+	static void *thr_adjust_fn(void *arg);
 
 	int add_task(ThreadTask &task);
 
