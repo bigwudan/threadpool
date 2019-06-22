@@ -1,19 +1,42 @@
 #include <pthread.h>
 #include <unistd.h>
 
-
 #include "ThreadPool.h"
 #include "ThreadTask.h"
-
 #include "WorkThread.h"
-
-
 
 using namespace threadpool;
 
 ThreadPool::ThreadPool(int min_num, int max_num, int max_task_num):
-	min_thr_num(min_num),max_thr_num(max_num),live_thr_num(min_num),busy_thr_num(0),wait_exit_thr_num(0),max_task_num(max_task_num),shutdown(ThreadPool::On)
+	min_thr_num(min_num),max_thr_num(max_num),live_thr_num(min_num),busy_thr_num(0),wait_exit_thr_num(0),max_task_num(max_task_num),shutdown(ThreadPool::On),task_num(0)
 {
+}
+
+
+ThreadPool::~ThreadPool()
+{
+	pthread_mutex_destroy(&lock);
+	pthread_mutex_destroy(&thread_counter);
+	pthread_cond_destroy(&queue_not_full);
+	pthread_cond_destroy(&queue_not_empty);
+
+	for( std::list<WorkThread *>::iterator it = work_thread.begin(); it != work_thread.end(); ++it   ){
+		delete *it;
+	}
+
+
+	for( std::list<ThreadTask *>::iterator it = thread_task.begin(); it != thread_task.end(); ++it   ){
+		delete *it;
+	}
+
+
+
+}
+
+//
+int ThreadPool::ThreadInit()
+{
+
 	do{
 		if(pthread_mutex_init(&lock,NULL) !=0|| 
 			pthread_mutex_init(&thread_counter,NULL) != 0 ||
@@ -21,6 +44,7 @@ ThreadPool::ThreadPool(int min_num, int max_num, int max_task_num):
 			pthread_cond_init( &queue_not_empty, NULL ) != 0)
 		{
 			std::cout << "mutex_error";
+			return 1;
 			break;
 		}
 		for(int i=0; i < min_thr_num; i++){
@@ -35,35 +59,10 @@ ThreadPool::ThreadPool(int min_num, int max_num, int max_task_num):
 			work_thr->thread_id = tid;
 			work_thread.push_back(work_thr);
 		}
+		
 	
 	}while(0);
-}
-
-
-ThreadPool::~ThreadPool()
-{
-/*	if(lock) pthread_mutex_destroy(&lock);
-	if(thread_counter) pthread_mutex_destroy(&thread_counter);
-	if(queue_not_full) pthread_cond_destroy(&queue_not_full);
-	if(queue_not_full) pthread_cond_destroy(&queue_not_empty);*/
-
-	/*for( std::list<WorkThread *>::iterator it = work_thread.begin(); it != work_thread.end(); ++it   ){
-		delete *it;
-	}
-
-
-	for( std::list<WorkThread *>::iterator it = thread_task.begin(); it != thread_task.end(); ++it   ){
-		delete *it;
-	}*/
-
-
-
-}
-
-//
-int ThreadPool::ThreadInit()
-{
-
+	return 0;
 }
 
 
@@ -126,13 +125,14 @@ void *ThreadPool::thr_adjust_fn(void *arg)
 int ThreadPool::add_task(ThreadTask &task)
 {
 	pthread_mutex_lock(&lock);
-	if(work_thread.size() <= thread_task.size() ){
+	while((task_num >= max_task_num   )     ){
 		pthread_cond_wait(&queue_not_full, &lock);
 	}
 	thread_task.push_back(&task);
+	task_num++;
 	int flag=pthread_cond_signal(&queue_not_empty);
-	std::cout << "flag:" << flag<< std::endl;
 	pthread_mutex_unlock(&lock);
+	return 0;
 }
 
 

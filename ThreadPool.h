@@ -36,6 +36,7 @@ public:
 	int busy_thr_num;
 	int wait_exit_thr_num;
 	int max_task_num;
+	int task_num;
 		
 	static int adjust_time;
 
