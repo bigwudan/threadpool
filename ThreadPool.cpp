@@ -109,8 +109,22 @@ void *ThreadPool::thr_adjust_fn(void *arg)
 	sleep(adjust_time);
 	ThreadPool *pool = (ThreadPool *)arg;
 	pthread_mutex_lock(&pool->lock);
-	if((pool->thread_task).size() >=(pool->work_thread).size()){
-		for(int i = 0; i++; i < 5){
+	int queue_size = pool->task_num;
+	int live_thr_num = pool->live_thr_num;
+	pthread_mutex_unlock(&pool->lock);
+
+
+	pthread_mutex_lock(&pool->thread_counter);
+
+	int busy_thr_num = pool->busy_thr_num;
+	pthread_mutex_unlock(&pool->thread_counter);
+
+	if(queue_size >= 10  && live_thr_num < pool->max_thr_num ){
+		pthread_mutex_lock(&pool->lock);
+		int add = 0;
+		for(int i=0; i < pool->max_thr_num && add < 10 
+				&& pool->live_thr_num < pool->max_thr_num; i++ ){
+			add++;
 			pthread_t tid;
 			pthread_attr_t attr;
 			pthread_attr_init(&attr);
@@ -119,18 +133,28 @@ void *ThreadPool::thr_adjust_fn(void *arg)
 			pool->live_thr_num++;
 			work_thr->id = pool->live_thr_num;
 			work_thr->thread_pool = pool;
-			pthread_create(&tid, &attr, thr_fn, work_thr);
+			pthread_create(&tid, &attr, pool->thr_fn, work_thr);
 			work_thr->thread_id = tid;
 			pool->work_thread.push_back(work_thr);
+		
+		
 		}
+	
+		pthread_mutex_unlock(&pool->lock);
 	}
-	if((pool->thread_task).size() < (pool->work_thread).size()  
-			&& (pool->work_thread).size() > pool->min_thr_num  )
-	{
-			pthread_cond_broadcast(&pool->queue_not_full);
+	
+	if((busy_thr_num * 2) < live_thr_num && live_thr_num > pool->min_thr_num  ){
+		pthread_mutex_lock(&pool->lock);
+		pool->wait_exit_thr_num = 10;
+		pthread_mutex_unlock(&pool->lock);
+		for(int i=0; i < 10; i++){
+			pthread_cond_signal(&pool->queue_not_empty);
+		}
+	
+	
 	}
-	pthread_mutex_unlock(&pool->lock);
 	return NULL;
+
 
 }
 
