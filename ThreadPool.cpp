@@ -11,38 +11,59 @@
 
 using namespace threadpool;
 
-ThreadPool::ThreadPool(int min_num, int max_num):
-	min_thr_num(min_num),max_thr_num(max_num),live_thr_num(0),busy_thr_num(0),wait_exit_thr_num(0),shutdown(ThreadPool::On)
+ThreadPool::ThreadPool(int min_num, int max_num, int max_task_num):
+	min_thr_num(min_num),max_thr_num(max_num),live_thr_num(min_num),busy_thr_num(0),wait_exit_thr_num(0),max_task_num(max_task_num),shutdown(ThreadPool::On)
 {
-	pthread_mutex_init(&lock,NULL); 
-	pthread_mutex_init(&thread_counter,NULL); 
-	pthread_cond_init( &queue_not_full, NULL ) ;
-	pthread_cond_init( &queue_not_empty, NULL ) ;
+	do{
+		if(pthread_mutex_init(&lock,NULL) !=0|| 
+			pthread_mutex_init(&thread_counter,NULL) != 0 ||
+			pthread_cond_init( &queue_not_full, NULL ) !=0||
+			pthread_cond_init( &queue_not_empty, NULL ) != 0)
+		{
+			std::cout << "mutex_error";
+			break;
+		}
+		for(int i=0; i < min_thr_num; i++){
+			pthread_t tid;
+			pthread_attr_t attr;
+			pthread_attr_init(&attr);
+			pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+			WorkThread *work_thr = new WorkThread();
+			work_thr->id = i;
+			work_thr->thread_pool = this;
+			pthread_create(&tid, &attr, thr_fn, work_thr);
+			work_thr->thread_id = tid;
+			work_thread.push_back(work_thr);
+		}
+	
+	}while(0);
 }
 
 
 ThreadPool::~ThreadPool()
 {
-	pthread_mutex_destroy(&lock);
-	pthread_mutex_destroy(&thread_counter);
+/*	if(lock) pthread_mutex_destroy(&lock);
+	if(thread_counter) pthread_mutex_destroy(&thread_counter);
+	if(queue_not_full) pthread_cond_destroy(&queue_not_full);
+	if(queue_not_full) pthread_cond_destroy(&queue_not_empty);*/
+
+	/*for( std::list<WorkThread *>::iterator it = work_thread.begin(); it != work_thread.end(); ++it   ){
+		delete *it;
+	}
+
+
+	for( std::list<WorkThread *>::iterator it = thread_task.begin(); it != thread_task.end(); ++it   ){
+		delete *it;
+	}*/
+
+
+
 }
 
-
+//
 int ThreadPool::ThreadInit()
 {
-	for(int i=0; i < min_thr_num; i++){
-		pthread_t tid;
-		pthread_attr_t attr;
-		pthread_attr_init(&attr);
-		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-		WorkThread *work_thr = new WorkThread();
-		work_thr->id = i;
-		work_thr->thread_pool = this;
-		pthread_create(&tid, &attr, thr_fn, work_thr);
-		work_thr->thread_id = tid;
-		work_thread.push_back(work_thr);
-		live_thr_num++;
-	}
+
 }
 
 

@@ -15,7 +15,7 @@ class ThreadPool
 {
 
 public:
-	ThreadPool(int, int);
+	ThreadPool(int, int, int);
 	~ThreadPool();
 
 
@@ -35,6 +35,7 @@ public:
 	int live_thr_num;
 	int busy_thr_num;
 	int wait_exit_thr_num;
+	int max_task_num;
 		
 	static int adjust_time;
 

@@ -11,17 +11,17 @@
 int main()
 {
 
-	threadpool::ThreadPool thread_pool(2, 10);
-	thread_pool.ThreadInit();
-
-	threadpool::ThreadTask t1(1);
-
-
-	threadpool::ThreadTask t2(2);
-	
-	sleep(3);
-
-	thread_pool.add_task(t1);
+//	threadpool::ThreadPool thread_pool(2, 10);
+//	thread_pool.ThreadInit();
+//
+//	threadpool::ThreadTask t1(1);
+//
+//
+//	threadpool::ThreadTask t2(2);
+//	
+//	sleep(3);
+//
+//	thread_pool.add_task(t1);
 	
 //	thread_pool.add_task(t2);
 
