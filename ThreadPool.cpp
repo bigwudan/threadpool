@@ -24,16 +24,11 @@ ThreadPool::~ThreadPool()
 		delete *it;
 	}
 
-
 	for( std::list<ThreadTask *>::iterator it = thread_task.begin(); it != thread_task.end(); ++it   ){
 		delete *it;
 	}
-
-
-
 }
 
-//
 int ThreadPool::ThreadInit()
 {
 
@@ -94,8 +89,6 @@ void *ThreadPool::thr_fn(void *arg)
 		pool->busy_thr_num++;
 		pthread_mutex_unlock(&pool->thread_counter);
 		//fun
-
-
 		pthread_mutex_lock(&pool->thread_counter);
 		pool->busy_thr_num--;
 		pthread_mutex_unlock(&pool->thread_counter);
@@ -112,13 +105,9 @@ void *ThreadPool::thr_adjust_fn(void *arg)
 	int queue_size = pool->task_num;
 	int live_thr_num = pool->live_thr_num;
 	pthread_mutex_unlock(&pool->lock);
-
-
 	pthread_mutex_lock(&pool->thread_counter);
-
 	int busy_thr_num = pool->busy_thr_num;
 	pthread_mutex_unlock(&pool->thread_counter);
-
 	if(queue_size >= 10  && live_thr_num < pool->max_thr_num ){
 		pthread_mutex_lock(&pool->lock);
 		int add = 0;
@@ -136,10 +125,7 @@ void *ThreadPool::thr_adjust_fn(void *arg)
 			pthread_create(&tid, &attr, pool->thr_fn, work_thr);
 			work_thr->thread_id = tid;
 			pool->work_thread.push_back(work_thr);
-		
-		
 		}
-	
 		pthread_mutex_unlock(&pool->lock);
 	}
 	
@@ -150,12 +136,8 @@ void *ThreadPool::thr_adjust_fn(void *arg)
 		for(int i=0; i < 10; i++){
 			pthread_cond_signal(&pool->queue_not_empty);
 		}
-	
-	
 	}
 	return NULL;
-
-
 }
 
 

@@ -10,7 +10,7 @@ Off	ThreadPool.h	/^enum threadpool_state{ On, Off };$/;"	e	enum:threadpool::Thre
 On	ThreadPool.h	/^enum threadpool_state{ On, Off };$/;"	e	enum:threadpool::ThreadPool::threadpool_state
 StopState	WorkThread.h	/^		StopState$/;"	e	enum:threadpool::WorkThread::work_state
 ThreadInit	ThreadPool.cpp	/^int ThreadPool::ThreadInit()$/;"	f	class:ThreadPool
-ThreadPool	ThreadPool.cpp	/^ThreadPool::ThreadPool(int min_num, int max_num):$/;"	f	class:ThreadPool
+ThreadPool	ThreadPool.cpp	/^ThreadPool::ThreadPool(int min_num, int max_num, int max_task_num):$/;"	f	class:ThreadPool
 ThreadPool	ThreadPool.h	/^class ThreadPool$/;"	c	namespace:threadpool
 ThreadTask	ThreadTask.h	/^	ThreadTask(int id):thread_task_id(id)$/;"	f	class:threadpool::ThreadTask
 ThreadTask	ThreadTask.h	/^class ThreadTask$/;"	c	namespace:threadpool
@@ -22,12 +22,14 @@ _THREADTASK_H	ThreadTask.h	2;"	d
 _WORKTHREAD_H_	WorkThread.h	3;"	d
 _test_h	test.h	2;"	d
 add_task	ThreadPool.cpp	/^int ThreadPool::add_task(ThreadTask &task)$/;"	f	class:ThreadPool
+adjust_time	ThreadPool.cpp	/^int ThreadPool::adjust_time = 1;$/;"	m	class:ThreadPool	file:
 adjust_time	ThreadPool.h	/^	static int adjust_time;$/;"	m	class:threadpool::ThreadPool
 busy_thr_num	ThreadPool.h	/^	int busy_thr_num;$/;"	m	class:threadpool::ThreadPool
 id	WorkThread.h	/^	int id;$/;"	m	class:threadpool::WorkThread
 live_thr_num	ThreadPool.h	/^	int live_thr_num;$/;"	m	class:threadpool::ThreadPool
 lock	ThreadPool.h	/^	pthread_mutex_t lock; \/\/本结构$/;"	m	class:threadpool::ThreadPool
 main	test.cpp	/^int main()$/;"	f
+max_task_num	ThreadPool.h	/^	int max_task_num;$/;"	m	class:threadpool::ThreadPool
 max_thr_num	ThreadPool.h	/^	int max_thr_num;$/;"	m	class:threadpool::ThreadPool
 min_thr_num	ThreadPool.h	/^	int min_thr_num;$/;"	m	class:threadpool::ThreadPool
 mytest	test.h	/^namespace mytest$/;"	n
@@ -37,6 +39,7 @@ shutdown	ThreadPool.h	/^	threadpool_state shutdown;$/;"	m	class:threadpool::Thre
 state_closed	test.h	/^		state_closed = -2,$/;"	e	enum:mytest::Computer::ComputerState
 state_open	test.h	/^		state_open = 1,$/;"	e	enum:mytest::Computer::ComputerState
 state_suspended	test.h	/^		state_suspended = 3$/;"	e	enum:mytest::Computer::ComputerState
+task_num	ThreadPool.h	/^	int task_num;$/;"	m	class:threadpool::ThreadPool
 test	test.h	/^	void test(ComputerState state )$/;"	f	class:mytest::Computer
 thr_adjust_fn	ThreadPool.cpp	/^void *ThreadPool::thr_adjust_fn(void *arg)$/;"	f	class:ThreadPool
 thr_fn	ThreadPool.cpp	/^void *ThreadPool::thr_fn(void *arg)$/;"	f	class:ThreadPool
